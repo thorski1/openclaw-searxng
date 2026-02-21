@@ -12,18 +12,10 @@ if [ -z "$QUERY" ]; then
   exit 1
 fi
 
-# Check connection
-if ! curl -s --head "$SEARX_URL" >/dev/null; then
-  echo "Error: SearXNG not running at $SEARX_URL"
-  echo "Try: podman start searxng"
-  exit 1
-fi
-
 # Fetch and format JSON results
 curl -sG "$SEARX_URL" \
-  -H "X-Forwarded-For: 127.0.0.1" \
   --data-urlencode "q=$QUERY" \
   --data-urlencode "format=json" \
   --data-urlencode "categories=$CATEGORY" \
-| jq -r '.results[] | "\(.title)\n\(.url)\n\(.content)\n---\"' \
+| jq -r '.results[] | "Title: \(.title)\nURL: \(.url)\nSnippet: \(.content)\n---"' \
 | head -n 20

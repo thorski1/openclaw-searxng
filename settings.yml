@@ -1,0 +1,11 @@
+# Minimal working settings
+use_default_settings: true
+server:
+  port: 8080
+  bind_address: "0.0.0.0"
+  secret_key: "change_this_secret_key_to_something_secure"
+
+search:
+  formats:
+    - html
+    - json
